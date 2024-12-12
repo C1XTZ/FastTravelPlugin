@@ -203,15 +203,9 @@ function script.drawUI(dt)
         ui.transparentWindow('mapScreen', screenOffset, screenSize, function()
             local sim = ac.getSim()
             local mp = ui.mousePos() - screenOffset
-            if 4 < sim.timeHours and sim.timeHours < 18 then
-                mapShot:setShadersType(render.ShadersType.Simplest)
-                mapFullShot:setShadersType(render.ShadersType.Simplest)
-                mapAlpha[1] = 0.2
-            else
-                mapShot:setShadersType(render.ShadersType.Simplified)
-                mapFullShot:setShadersType(render.ShadersType.SimplifiedWithLights)
-                mapAlpha[1] = 0.5
-            end
+            mapShot:setShadersType(render.ShadersType.Simplest)
+            mapFullShot:setShadersType(render.ShadersType.Simplest)
+            mapAlpha[1] = 0.5
             ui.drawRectFilled(vec2(), screenSize, rgbm(0, 0, 0, 0.5))
             if mapZoom == 1 then
                 ui.drawImage(mapFullShot, vec2(), screenSize)
