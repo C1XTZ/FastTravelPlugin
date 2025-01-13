@@ -249,13 +249,18 @@ function script.drawUI(dt)
             end
 
             hoverMark = -1
-            --c1xtz: tpdrawing: only shows first point of a unique type per group (hope this makes sense)
+            --c1xtz: tpdrawing: only shows first point of a unique type per group when zoomed out (hope this makes sense)
             local displayedPoints = {}
             for i, teleports in ipairs(onlineTeleports) do
                 local pointType, group = teleports[1], teleports[2]
                 if pointType == defaultType and mapZoom == #mapZoomValue then goto continue end
-                displayedPoints[group] = displayedPoints[group] or {}
-                if displayedPoints[group][pointType] then goto continue end
+
+                if mapZoom > 2 then
+                    displayedPoints[group] = displayedPoints[group] or {}
+                    if displayedPoints[group][pointType] then goto continue end
+                    displayedPoints[group][pointType] = true
+                end
+
                 local screenPos = projectPoint(teleports[3])
                 if 0 < screenPos.x and screenPos.x < 1 and 0 < screenPos.y and screenPos.y < 1 then
                     screenPos = screenPos * screenSize
@@ -264,7 +269,6 @@ function script.drawUI(dt)
                         hoverCID = -1
                         hoverCSP = screenPos
                     end
-                    displayedPoints[group][pointType] = true
                     ui.drawImage(baseUrl .. 'mapicon_' .. pointType .. '.png', screenPos - vec2(40, 40), screenPos + vec2(40, 40))
                 end
                 ::continue::
