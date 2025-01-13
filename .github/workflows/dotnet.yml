@@ -3,12 +3,9 @@ on:
   push:
     tags:        
       - 'v*'
-
 jobs:
   build:
-
     runs-on: ubuntu-latest
-
     steps:
     - uses: actions/checkout@v4
       with:
@@ -29,6 +26,8 @@ jobs:
       run: cd out-linux-arm64 && tar -czf assetto-server-linux-arm64.tar.gz * && cd ..
     - name: Package (Windows x64)
       run: cd out-win-x64 && zip -r assetto-server-win-x64.zip * && cd ..
+    - name: Package FastTravel Plugin
+      run: cd out-win-x64/plugins && zip -r ../../fasttravelplugin.zip FastTravelPlugin && cd ../..
     - name: Release
       uses: softprops/action-gh-release@v1
       with:
@@ -37,3 +36,4 @@ jobs:
           out-linux-x64/assetto-server-linux-x64.tar.gz
           out-linux-arm64/assetto-server-linux-arm64.tar.gz
           out-win-x64/assetto-server-win-x64.zip
+          fasttravelplugin.zip
