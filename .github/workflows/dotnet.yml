@@ -26,14 +26,26 @@ jobs:
       run: cd out-linux-arm64 && tar -czf assetto-server-linux-arm64.tar.gz * && cd ..
     - name: Package (Windows x64)
       run: cd out-win-x64 && zip -r assetto-server-win-x64.zip * && cd ..
-    - name: Package FastTravel Plugin
-      run: cd out-win-x64/plugins && zip -r ../../fasttravelplugin.zip FastTravelPlugin && cd ../..
+    - name: Package FastTravelPlugin (Linux x64)
+      run: cd out-linux-x64/plugins && zip -r ../../fasttravelplugin-linux-x64.zip FastTravelPlugin && cd ../..
+    - name: Package FastTravelPlugin (Linux arm64)
+      run: cd out-linux-arm64/plugins && zip -r ../../fasttravelplugin-linux-arm64.zip FastTravelPlugin && cd ../..
+    - name: Package FastTravelPlugin (Windows x64)
+      run: cd out-win-x64/plugins && zip -r ../../fasttravelplugin-win-x64.zip FastTravelPlugin && cd ../..
     - name: Release
       uses: softprops/action-gh-release@v1
       with:
-        prerelease: true
         files: |
-          out-linux-x64/assetto-server-linux-x64.tar.gz
-          out-linux-arm64/assetto-server-linux-arm64.tar.gz
-          out-win-x64/assetto-server-win-x64.zip
-          fasttravelplugin.zip
+          fasttravelplugin-linux-x64.zip
+          fasttravelplugin-linux-arm64.zip
+          fasttravelplugin-win-x64.zip
+        body: |
+          ### Changes
+          Updated to AssettoServer v0.0.5
+          For AssettoServer changes please check the [official release notes.](https://github.com/compujuckel/AssettoServer/releases)
+          ### Installation
+          > [!CAUTION]
+          > **Requires the same AssettoServer version as in the release title. [Download](https://github.com/compujuckel/AssettoServer/releases)**
+          1. Download and extract the `fasttravelplugin-win-x64.zip`
+          2. Move the `FastTravelPlugin` folder into the `\plugins\` folder of your server.
+          3. Configure the plugin, read the [wiki page.](https://github.com/C1XTZ/AssettoServer/wiki/FastTravelPlugin#plugin-configuration)
