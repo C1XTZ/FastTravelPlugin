@@ -10,6 +10,9 @@ jobs:
     - uses: actions/checkout@v4
       with:
         fetch-depth: 0
+    - name: Base tag
+      id: basetag
+      run: echo "tag=$(echo ${{github.ref_name}} | sed 's/-ft.*$//')" >> $GITHUB_OUTPUT
     - name: Setup .NET
       uses: actions/setup-dotnet@v4
       with:
@@ -20,12 +23,6 @@ jobs:
       run: dotnet publish --runtime linux-arm64 -c Release
     - name: Publish (Windows x64)
       run: dotnet publish --runtime win-x64 -c Release
-    - name: Package (Linux x64)
-      run: cd out-linux-x64 && tar -czf assetto-server-linux-x64.tar.gz * && cd ..
-    - name: Package (Linux arm64)
-      run: cd out-linux-arm64 && tar -czf assetto-server-linux-arm64.tar.gz * && cd ..
-    - name: Package (Windows x64)
-      run: cd out-win-x64 && zip -r assetto-server-win-x64.zip * && cd ..
     - name: Package FastTravelPlugin (Linux x64)
       run: cd out-linux-x64/plugins && zip -r ../../fasttravelplugin-linux-x64.zip FastTravelPlugin && cd ../..
     - name: Package FastTravelPlugin (Linux arm64)
@@ -41,11 +38,11 @@ jobs:
           fasttravelplugin-win-x64.zip
         body: |
           ### Changes
-          Updated to AssettoServer v0.0.5
-          For AssettoServer changes please check the [official release notes.](https://github.com/compujuckel/AssettoServer/releases)
+          Updated to AssettoServer ${{steps.basetag.outputs.tag}}
+          For AssettoServer changes please read the [official release notes.](https://github.com/compujuckel/AssettoServer/releases/tag/${{steps.basetag.outputs.tag}})
           ### Installation
           > [!CAUTION]
-          > **Requires the same AssettoServer version as in the release title. [Download](https://github.com/compujuckel/AssettoServer/releases)**
+          > **Requires AssettoServer version ${{steps.basetag.outputs.tag}}. [Download](https://github.com/compujuckel/AssettoServer/releases/tag/${{steps.basetag.outputs.tag}})**
           1. Download and extract the `fasttravelplugin-win-x64.zip`
           2. Move the `FastTravelPlugin` folder into the `\plugins\` folder of your server.
           3. Configure the plugin, read the [wiki page.](https://github.com/C1XTZ/AssettoServer/wiki/FastTravelPlugin#plugin-configuration)
