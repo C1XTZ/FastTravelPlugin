@@ -105,8 +105,11 @@ local disabledCollisionEvent = ac.OnlineEvent({
     function(sender, data)
         if sender == nil then return end
         if sender.index == 0 then return end
-        ac.log(string.format('%s collision: [%d]%s', (data.disabled and 'disabled' or 'enabled'), sender.index, ac.getDriverName(sender.index)))
-        if supportAPI_collision then physics.disableCarCollisions(sender.index, data.disabled) end
+        if supportAPI_collision then
+            ac.log(string.format('%s collision: [%d]%s', (data.disabled and 'disabled' or 'enabled'), sender.index, ac.getDriverName(sender.index)))
+            physics.disableCarCollisions(sender.index, data.disabled)
+            physics.disableCarCollisions(0, data.disabled)
+        end
     end)
 
 ---@param mat mat4x4
