@@ -45,4 +45,10 @@ jobs:
           > **Requires AssettoServer version ${{steps.basetag.outputs.tag}}. [Download](https://github.com/compujuckel/AssettoServer/releases/tag/${{steps.basetag.outputs.tag}})**
           1. Download and extract the `fasttravelplugin-win-x64.zip`
           2. Move the `FastTravelPlugin` folder into the `\plugins\` folder of your server.
-          3. Configure the plugin, read the [wiki page.](https://github.com/C1XTZ/AssettoServer/wiki/FastTravelPlugin#plugin-configuration)
+          3. Go to the `\cfg\` folder of your server, open `extra_cfg.yml` and enable the plugin.
+              ```yml
+              # List of plugins to enable
+              EnablePlugins:
+                - FastTravelPlugin
+              ```
+          4. Configure the plugin, read the [wiki page.](https://github.com/C1XTZ/AssettoServer/wiki/FastTravelPlugin#plugin-configuration)
