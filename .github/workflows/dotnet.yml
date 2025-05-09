@@ -51,4 +51,4 @@ jobs:
               EnablePlugins:
                 - FastTravelPlugin
               ```
-          4. Configure the plugin, read the [wiki page.](https://github.com/C1XTZ/AssettoServer/wiki/FastTravelPlugin#plugin-configuration)
+          4. Configure the plugin, read the [wiki page.](https://github.com/C1XTZ/FastTravelPlugin/wiki#plugin-configuration)
